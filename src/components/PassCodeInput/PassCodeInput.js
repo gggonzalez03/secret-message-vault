@@ -9,18 +9,56 @@ class PassCodeInput extends Component {
         const { style } = this.props
 
         // props from redux
-        const { value, combination } = this.props        
+        const { value, combination } = this.props
+
+        /**
+         * TODO:
+         * Refactor this
+         */
+        var combinationWithStatus = Object.values(combination).map((value, index) => {
+
+            var status = 'inputUnset'
+
+            if (combination.focus == index + 1)
+                status = 'inputActive'
+            else {
+                if (combination.focus != index + 1 && value != undefined)
+                    status = 'inputSet'
+            }
+
+            return {
+                place: index + 1,
+                value: value,
+                status: status,
+                styles: styles[status]
+            }
+        })
 
         return (
-            <div style={{...styles.container, ...style}}>
-                 {/* These statements say that if a code is undefined and it is the current focus, then the value selection should be shown
-                     Else, show the code that is saved */}
-                <div style={styles.input}>{combination[1] == undefined && combination.focus == 1 ? value : combination[1]}</div>&#8226;
-                <div style={styles.input}>{combination[2] == undefined && combination.focus == 2 ? value : combination[2]}</div>&#8226;
-                <div style={styles.input}>{combination[3] == undefined && combination.focus == 3 ? value : combination[3]}</div>
+            <div style={{ ...styles.container, ...style }}>
+                {/* These statements say that if a code is undefined and it is the current focus, then the value selection should be shown
+                    Else, show the code that is saved */}
+                <div style={combinationWithStatus[0].styles}>{combination[1] == undefined && combination.focus == 1 ? value : combination[1]}</div>&#8226;
+                <div style={combinationWithStatus[1].styles}>{combination[2] == undefined && combination.focus == 2 ? value : combination[2]}</div>&#8226;
+                <div style={combinationWithStatus[2].styles}>{combination[3] == undefined && combination.focus == 3 ? value : combination[3]}</div>
             </div>
         )
     }
+}
+
+const inputStyleUnset = {
+    display: 'flex',
+    width: '.5em',
+    height: '.5em',
+    padding: '1em',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderRadius: '8px',
+    margin: '.5em',
+    fontSize: '2em'
 }
 
 const styles = {
@@ -29,20 +67,18 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
     },
-    input: {
-        display: 'flex',
-        width: '.5em',
-        height: '.5em',
-        padding: '1em',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: '2px',
-        borderStyle: 'solid',
-        borderColor: 'black',
-        borderRadius: '8px',
-        margin: '.5em',
-        fontSize: '2em'
-    }
+    inputUnset: {
+        ...inputStyleUnset,
+        borderColor: 'gray',
+    },
+    inputSet: {
+        ...inputStyleUnset,
+        borderColor: '#4af953',
+    },
+    inputActive: {
+        ...inputStyleUnset,
+        borderColor: '#fcd083'
+    },
 }
 
 PassCodeInput.defaultProps = {
