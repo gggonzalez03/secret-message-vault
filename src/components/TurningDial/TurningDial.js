@@ -70,6 +70,20 @@ class TurningDial extends Component {
         })
     }
 
+    calcValue = (knobRotation) => {
+        const { slices, step } = this.props
+
+        let maxTickValue = slices * step
+
+        if (knobRotation < 0)
+            knobRotation += 360
+
+        let value = maxTickValue - (maxTickValue / 360) * knobRotation
+        value = Math.floor(value)
+
+        return value
+    }
+
     // Calculate the rotation of the knob based on the offsets set by startTurn
     turn(angle) {
         const { lockAngle, currentAngle } = this.state
@@ -80,6 +94,9 @@ class TurningDial extends Component {
             knobRotation = knobRotation % 360
         if (knobRotation < 0)
             knobRotation = knobRotation + 360
+
+        // Callback
+        this.props.callback(this.calcValue(knobRotation))
 
         this.setState({
             knobRotation: knobRotation,
@@ -197,6 +214,9 @@ TurningDial.defaultProps = {
     rotateOffset: 0,
     style: {
 
+    },
+    callback: () => {
+
     }
 }
 
@@ -210,6 +230,7 @@ TurningDial.propTypes = {
     color: PropTypes.string,
     rotateOffset: PropTypes.number,
     style: PropTypes.object,
+    callback: PropTypes.func,
 }
 
 export default TurningDial

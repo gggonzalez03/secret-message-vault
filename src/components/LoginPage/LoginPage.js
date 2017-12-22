@@ -23,6 +23,9 @@ class LoginPage extends Component {
                         rotateOffset={90}
                         step={5}
                         tickWidth={2}
+                        callback={(value) => {
+                            console.log(value)
+                        }}
                     />
                 </div>
             </div>
