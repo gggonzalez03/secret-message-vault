@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
+import TurningDial from '../TurningDial/TurningDial';
 
 class LoginPage extends Component {
     state = {}
@@ -9,9 +10,21 @@ class LoginPage extends Component {
         return (
             <div style={styles.container}>
                 <div style={styles.header}>
-                    <GoogleLoginButton style={styles.loginButton}/>
+                    <GoogleLoginButton style={styles.loginButton} />
                 </div>
-
+                <div style={styles.turningDial}>
+                    <TurningDial
+                        radius={350}
+                        tickHeight={20}
+                        slices={8}
+                        inBetweenSlicesTicksCount={5}
+                        color={'black'}
+                        //knobRotation={((skill.duration / 60) / 60) * 360 * -1} //Get appropriate angle through minute value
+                        rotateOffset={90}
+                        step={5}
+                        tickWidth={2}
+                    />
+                </div>
             </div>
         )
     }
@@ -27,7 +40,11 @@ const styles = {
         flexDirection: 'row-reverse',
     },
     loginButton: {
-        
+
+    },
+    turningDial: {
+        display: 'flex',
+        justifyContent: 'center',
     }
 }
 
