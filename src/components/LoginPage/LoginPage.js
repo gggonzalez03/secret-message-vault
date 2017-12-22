@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
 import TurningDialContainer from '../TurningDial/TurningDialContainer';
-import DialHandle from '../DialHandle/DialHandle';
+import DialHandleContainer from '../DialHandle/DialHandleContainer';
 
 class LoginPage extends Component {
     state = {}
@@ -15,11 +15,7 @@ class LoginPage extends Component {
                 </div>
                 <div style={styles.turningDial}>
                     <div style={{ ...styles.handle, height: 350 * 2, width: 350 * 2 }}>
-                        <DialHandle
-                            color='#2572ed'
-                            radius={150}
-                            grip={60}
-                        />
+                        <DialHandleContainer/>
                     </div>
                     <TurningDialContainer/>
                 </div>

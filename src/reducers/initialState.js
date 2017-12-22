@@ -3,7 +3,8 @@ var initialState = {
 
     },
     dial: {
-        value: 0
+        value: 0,
+        rotate: 0,
     }
 }
 

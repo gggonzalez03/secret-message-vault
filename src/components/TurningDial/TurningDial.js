@@ -97,7 +97,7 @@ class TurningDial extends Component {
             knobRotation = knobRotation + 360
 
         // Callback
-        this.props.callback(this.calcValue(knobRotation))
+        this.props.callback(this.calcValue(knobRotation), knobRotation)
 
         this.setState({
             knobRotation: knobRotation,

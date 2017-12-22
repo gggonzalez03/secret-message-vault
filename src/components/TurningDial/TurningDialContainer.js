@@ -20,8 +20,8 @@ class TurningDialContainer extends Component {
                 color={'black'}
                 step={5}
                 tickWidth={2}
-                callback={(value) => {
-                    turnDial(value)
+                callback={(value, rotate) => {
+                    turnDial(value, rotate)
                 }}
             />
         )
@@ -40,7 +40,7 @@ const mapStateToProps = ({ dial }) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        turnDial: (value) => dispatch(turnDial(value)),
+        turnDial: (value, rotate) => dispatch(turnDial(value, rotate)),
     }
 }
 

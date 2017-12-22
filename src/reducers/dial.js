@@ -9,6 +9,7 @@ function dial(state = initialState.dial, action) {
             return {
                 ...state,
                 value: action.value,
+                rotate: action.rotate,
             }
         }
         default:
