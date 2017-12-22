@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
 import TurningDialContainer from '../TurningDial/TurningDialContainer';
 import DialHandleContainer from '../DialHandle/DialHandleContainer';
+import PassCodeInput from '../PassCodeInput/PassCodeInput';
 
 class LoginPage extends Component {
     state = {}
@@ -13,11 +14,14 @@ class LoginPage extends Component {
                 <div style={styles.header}>
                     <GoogleLoginButton style={styles.loginButton} />
                 </div>
+                <div style={styles.passCodeInput}>
+                    <PassCodeInput />
+                </div>
                 <div style={styles.turningDial}>
                     <div style={{ ...styles.handle, height: 350 * 2, width: 350 * 2 }}>
-                        <DialHandleContainer/>
+                        <DialHandleContainer />
                     </div>
-                    <TurningDialContainer/>
+                    <TurningDialContainer />
                 </div>
             </div>
         )
@@ -45,6 +49,9 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
+    },
+    passCodeInput: {
+        padding: '2em',
     }
 }
 
