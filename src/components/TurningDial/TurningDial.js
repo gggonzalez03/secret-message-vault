@@ -42,6 +42,60 @@ class TurningDial extends Component {
         }
         return ticksPath
     }
+
+    // Get coordinates of the mouse in a div
+    getCoords(event) {
+        const { radius } = this.props
+        var bounds = event.target.getBoundingClientRect();
+        var x = radius - event.clientX - bounds.left
+        var y = event.clientY - bounds.top - radius
+        return {
+            x: x,
+            y: y,
+        }
+    }
+
+    // This will set necessary angle offset while turning
+    startTurn(angle) {
+        /**
+         * TODO:
+         * Stop propagation such that dial labels do not fire an event
+         */
+        const { knobRotation } = this.state
+        this.setState({
+            lockAngle: angle, // This angle will be the reference (offset) for the NEXT turn
+            currentAngle: knobRotation, // This angle will be the reference (offset) for THIS turn
+            mouseDown: true,
+        })
+    }
+
+    // Calculate the rotation of the knob based on the offsets set by startTurn
+    turn(angle) {
+        const { lockAngle, currentAngle } = this.state
+        let knobRotation = angle - lockAngle + currentAngle
+
+        // Keep angle value less than 360 but keep the right rotation
+        if (knobRotation > 360)
+            knobRotation = knobRotation % 360
+        if (knobRotation < 0)
+            knobRotation = knobRotation + 360
+
+        this.setState({
+            knobRotation: knobRotation,
+        })
+    }
+
+    // Let the app know that the user already stopped turning
+    endTurn() {
+        this.setState({
+            mouseDown: false,
+        })
+    }
+
+    // Get angle of of (x, y) coordinates
+    getAngle(x, y) {
+        return Math.atan2(y, x) * 180 / Math.PI
+    }
     render() {
         const { radius, tickHeight, slices, inBetweenSlicesTicksCount, color, step, rotateOffset, tickWidth, style } = this.props
         const { knobRotation } = this.state
@@ -69,9 +123,29 @@ class TurningDial extends Component {
         let bigTicks = this.generateTicksPath(radius, angleCollectionOuter, angleCollectionInner)
         let smallTicks = this.generateTicksPath(radius, angleCollectionOuterBetween, angleCollectionInnerBetween)
         return (
-            <div style={{width: radius * 2, height: radius * 2, ...styles.container, ...style}}>
+            <div style={{ width: radius * 2, height: radius * 2, ...styles.container, ...style }}
+                onMouseDown={(event) => {
+                    let coords = this.getCoords(event)
+                    let angle = this.getAngle(coords.x, coords.y)
+                    this.startTurn(angle)
+                }}
+                onMouseMove={(event) => {
+                    if (this.state.mouseDown) {
+                        let coords = this.getCoords(event)
+                        let angle = this.getAngle(coords.x, coords.y)
+
+                        this.turn(angle)
+                    }
+                }}
+                onMouseUp={() => {
+                    this.endTurn()
+                }}
+            >
                 <svg height={radius * 2} width={radius * 2}>
-                    <g>
+                    <g
+                        // knobRotation * -1 will correct the rotation turning it the other way
+                        transform={`rotate(${knobRotation * -1} ${radius} ${radius})`}
+                    >
                         <path
                             d={bigTicks}
                             stroke={color}
@@ -84,6 +158,7 @@ class TurningDial extends Component {
                         />
                         {tickLabelCoordinateCollection.map(tick => (
                             <text
+                                key={tick.angle}
                                 x={radius + tick.x}
                                 y={radius - tick.y}
                                 fill={color}
@@ -95,7 +170,6 @@ class TurningDial extends Component {
                                 {tick.label}</text>
                         ))}
                     </g>
-
                 </svg>
             </div>
         )
