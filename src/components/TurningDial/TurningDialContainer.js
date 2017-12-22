@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import TurningDial from './TurningDial'
 import {
     turnDial,
+    inputCode,
 } from '../../actions/dial'
 
 // These containers are created so that the re-renders becomes minimal
@@ -10,7 +11,7 @@ class TurningDialContainer extends Component {
     state = {}
     render() {
         // redux action functions
-        const { turnDial } = this.props
+        const { turnDial, inputCode } = this.props
         return (
             <TurningDial
                 radius={350}
@@ -23,6 +24,9 @@ class TurningDialContainer extends Component {
                 callback={(value, rotate) => {
                     turnDial(value, rotate)
                 }}
+                releaseCallback={(value) => {
+                    inputCode(value)
+                }}
             />
         )
     }
@@ -34,13 +38,13 @@ const styles = {
 
 const mapStateToProps = ({ dial }) => {
     return {
-        value: dial.value,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         turnDial: (value, rotate) => dispatch(turnDial(value, rotate)),
+        inputCode: (value) => dispatch(inputCode(value)),
     }
 }
 

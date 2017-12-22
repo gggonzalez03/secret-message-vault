@@ -105,7 +105,19 @@ class TurningDial extends Component {
     }
 
     // Let the app know that the user already stopped turning
-    endTurn() {
+    endTurn(angle) {
+        const { lockAngle, currentAngle } = this.state
+        let knobRotation = angle - lockAngle + currentAngle
+
+        // Keep angle value less than 360 but keep the right rotation
+        if (knobRotation > 360)
+            knobRotation = knobRotation % 360
+        if (knobRotation < 0)
+            knobRotation = knobRotation + 360
+
+        // Release callback
+        this.props.releaseCallback(this.calcValue(knobRotation))
+
         this.setState({
             mouseDown: false,
         })
@@ -156,8 +168,10 @@ class TurningDial extends Component {
                         this.turn(angle)
                     }
                 }}
-                onMouseUp={() => {
-                    this.endTurn()
+                onMouseUp={(event) => {
+                    let coords = this.getCoords(event)
+                    let angle = this.getAngle(coords.x, coords.y)
+                    this.endTurn(angle)
                 }}
             >
                 <div style={{ width: radius * 2, height: radius * 2, ...styles.directionPointer }}>
@@ -234,7 +248,10 @@ TurningDial.defaultProps = {
     },
     callback: () => {
 
-    }
+    },
+    releaseCallback: () => {
+
+    },
 }
 
 TurningDial.propTypes = {
@@ -248,6 +265,7 @@ TurningDial.propTypes = {
     rotateOffset: PropTypes.number,
     style: PropTypes.object,
     callback: PropTypes.func,
+    releaseCallback: PropTypes.func,
 }
 
 export default TurningDial

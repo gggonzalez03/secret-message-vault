@@ -9,12 +9,15 @@ class PassCodeInput extends Component {
         const { style } = this.props
 
         // props from redux
-        const { value } = this.props
+        const { value, combination } = this.props        
+
         return (
             <div style={{...styles.container, ...style}}>
-                <div style={styles.input}>{value}</div>&#8226;
-                <div style={styles.input}></div>&#8226;
-                <div style={styles.input}></div>
+                 {/* These statements say that if a code is undefined and it is the current focus, then the value selection should be shown
+                     Else, show the code that is saved */}
+                <div style={styles.input}>{combination[1] == undefined && combination.focus == 1 ? value : combination[1]}</div>&#8226;
+                <div style={styles.input}>{combination[2] == undefined && combination.focus == 2 ? value : combination[2]}</div>&#8226;
+                <div style={styles.input}>{combination[3] == undefined && combination.focus == 3 ? value : combination[3]}</div>
             </div>
         )
     }
@@ -55,6 +58,7 @@ PassCodeInput.propTypes = {
 const mapStateToProps = ({ dial }) => {
     return {
         value: dial.value,
+        combination: dial.combination,
     }
 }
 
