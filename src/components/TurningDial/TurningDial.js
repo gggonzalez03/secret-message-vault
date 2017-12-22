@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import DirectionPointer from '../DirectionPointer/DirectionPointer'
 
 class TurningDial extends Component {
     state = {}
@@ -159,6 +160,16 @@ class TurningDial extends Component {
                     this.endTurn()
                 }}
             >
+                <div style={{ width: radius * 2, height: radius * 2, ...styles.directionPointer }}>
+                    <DirectionPointer
+                        radius={radius - (tickHeight * 2)}
+                        padding={0}
+                        rotate={0}
+                        height={tickHeight * 2}
+                        color={'red'}
+                    />
+                </div>
+
                 <svg height={radius * 2} width={radius * 2}>
                     <g
                         // knobRotation * -1 will correct the rotation turning it the other way
@@ -198,6 +209,12 @@ const styles = {
     container: {
         cursor: 'pointer',
         borderRadius: '50%',
+    },
+    directionPointer: {
+        display: 'flex',
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 }
 
