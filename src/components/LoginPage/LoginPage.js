@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
-import TurningDial from '../TurningDial/TurningDial';
+import TurningDialContainer from '../TurningDial/TurningDialContainer';
 import DialHandle from '../DialHandle/DialHandle';
 
 class LoginPage extends Component {
@@ -21,18 +21,7 @@ class LoginPage extends Component {
                             grip={60}
                         />
                     </div>
-                    <TurningDial
-                        radius={350}
-                        tickHeight={20}
-                        slices={8}
-                        inBetweenSlicesTicksCount={5}
-                        color={'black'}
-                        step={5}
-                        tickWidth={2}
-                        callback={(value) => {
-                            console.log(value)
-                        }}
-                    />
+                    <TurningDialContainer/>
                 </div>
             </div>
         )
