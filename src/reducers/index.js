@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux'
-
 import initialState from './initialState'
 
-function index(state = initialState, action) {
+import dial from './dial'
+
+function index(state = initialState.general, action) {
     switch (action.type) {
         default:
             return state
@@ -11,4 +12,5 @@ function index(state = initialState, action) {
 
 export default combineReducers({
     index,
+    dial,
 })
