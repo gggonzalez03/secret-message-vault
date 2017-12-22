@@ -43,12 +43,13 @@ class TurningDial extends Component {
         return ticksPath
     }
 
-    // Get coordinates of the mouse in a div
+    // Coordinates of the mouse in a div and convert them
+    // to (x, y) coordinates based on the radius of the dial
     getCoords(event) {
         const { radius } = this.props
         var bounds = event.target.getBoundingClientRect();
-        var x = radius - event.clientX - bounds.left
-        var y = event.clientY - bounds.top - radius
+        var x = event.clientX - bounds.left - radius
+        var y = (event.clientY - bounds.top - radius) * -1
         return {
             x: x,
             y: y,
