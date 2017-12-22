@@ -164,7 +164,7 @@ class TurningDial extends Component {
                     <DirectionPointer
                         radius={radius - (tickHeight * 2)}
                         padding={0}
-                        rotate={0}
+                        rotate={rotateOffset}
                         height={tickHeight * 2}
                         color={'red'}
                     />
@@ -173,7 +173,7 @@ class TurningDial extends Component {
                 <svg height={radius * 2} width={radius * 2}>
                     <g
                         // knobRotation * -1 will correct the rotation turning it the other way
-                        transform={`rotate(${knobRotation * -1} ${radius} ${radius})`}
+                        transform={`rotate(${(knobRotation + rotateOffset) * -1} ${radius} ${radius})`}
                     >
                         <path
                             d={bigTicks}
@@ -228,7 +228,7 @@ TurningDial.defaultProps = {
     tickHeight: 10,
     tickWidth: 1,
     color: 'black',
-    rotateOffset: 0,
+    rotateOffset: 90,
     style: {
 
     },

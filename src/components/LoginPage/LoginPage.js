@@ -19,8 +19,6 @@ class LoginPage extends Component {
                         slices={8}
                         inBetweenSlicesTicksCount={5}
                         color={'black'}
-                        //knobRotation={((skill.duration / 60) / 60) * 360 * -1} //Get appropriate angle through minute value
-                        rotateOffset={90}
                         step={5}
                         tickWidth={2}
                         callback={(value) => {
