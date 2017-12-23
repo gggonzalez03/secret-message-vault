@@ -9,9 +9,10 @@ export function turnDial(value, rotate) {
     }
 }
 
-export function inputCode(code) {
+export function inputCode(code, rotate) {
     return {
         type: INPUT_CODE,
         code: code,
+        rotate: rotate,
     }
 }

@@ -12,7 +12,8 @@ var initialState = {
             2: undefined,
             3: undefined,
             focus: 1,
-        }
+        },
+        lastRotation: 0,
     }
 }
 

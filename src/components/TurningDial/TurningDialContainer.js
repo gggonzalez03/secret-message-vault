@@ -24,8 +24,8 @@ class TurningDialContainer extends Component {
                 callback={(value, rotate) => {
                     turnDial(value, rotate)
                 }}
-                releaseCallback={(value) => {
-                    inputCode(value)
+                releaseCallback={(value, rotate) => {
+                    inputCode(value, rotate)
                 }}
             />
         )
@@ -44,7 +44,7 @@ const mapStateToProps = ({ dial }) => {
 const mapDispatchToProps = dispatch => {
     return {
         turnDial: (value, rotate) => dispatch(turnDial(value, rotate)),
-        inputCode: (value) => dispatch(inputCode(value)),
+        inputCode: (value, rotate) => dispatch(inputCode(value, rotate)),
     }
 }
 

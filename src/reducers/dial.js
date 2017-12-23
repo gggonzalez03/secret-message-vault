@@ -26,7 +26,8 @@ function dial(state = initialState.dial, action) {
                     ...state.combination,
                     [state.combination.focus]: action.code,
                     focus: ++state.combination.focus
-                }
+                },
+                lastRotation: action.rotate,
             }
         }
         default:

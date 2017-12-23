@@ -116,7 +116,7 @@ class TurningDial extends Component {
             knobRotation = knobRotation + 360
 
         // Release callback
-        this.props.releaseCallback(this.calcValue(knobRotation))
+        this.props.releaseCallback(this.calcValue(knobRotation), knobRotation)
 
         this.setState({
             mouseDown: false,
@@ -246,12 +246,8 @@ TurningDial.defaultProps = {
     style: {
 
     },
-    callback: () => {
-
-    },
-    releaseCallback: () => {
-
-    },
+    callback: () => {},
+    releaseCallback: () => {},
 }
 
 TurningDial.propTypes = {
