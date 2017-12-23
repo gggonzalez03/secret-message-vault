@@ -72,14 +72,21 @@ class TurningDial extends Component {
     }
 
     calcValue = (knobRotation) => {
-        const { slices, step } = this.props
+        const { slices, step, reverse } = this.props
 
         let maxTickValue = slices * step
 
         if (knobRotation < 0)
             knobRotation += 360
 
+        if (reverse)
+            knobRotation = Math.abs(knobRotation - 360)
+
         let value = maxTickValue - (maxTickValue / 360) * knobRotation
+        /**
+         * TODO:
+         * Add prop option to use Math.round() so that the maximum value will not be n-1
+         */
         value = Math.floor(value)
 
         return value
@@ -128,7 +135,7 @@ class TurningDial extends Component {
         return Math.atan2(y, x) * 180 / Math.PI
     }
     render() {
-        const { radius, tickHeight, slices, inBetweenSlicesTicksCount, color, step, rotateOffset, tickWidth, style } = this.props
+        const { radius, tickHeight, slices, inBetweenSlicesTicksCount, color, step, rotateOffset, tickWidth, reverse, style } = this.props
         const { knobRotation } = this.state
 
         // Bigger ticks
@@ -142,12 +149,23 @@ class TurningDial extends Component {
         // Tick labels
         let tickLabelCoordinateCollection = this.getCircleSideCoordinates(radius - tickHeight, slices)
 
+        // Reverse the labels clockwise 0 to n
+        // This reverse will set the values to be in a wrong offset (the offset is the step, and it has to be subtracted from the values)
+        if (reverse)
+            tickLabelCoordinateCollection.reverse()
+
         // Set the labels
         tickLabelCoordinateCollection = tickLabelCoordinateCollection.map((tick, index) => {
             let multiplier = index + 1
+            let label = step * multiplier
+
+            // This will correct the offset of the values when reversed
+            if (reverse)
+                label -= step
+            
             return {
                 ...tick,
-                label: step * multiplier
+                label: label
             }
         })
 
@@ -243,11 +261,12 @@ TurningDial.defaultProps = {
     tickWidth: 1,
     color: 'black',
     rotateOffset: 90,
+    reverse: false,
     style: {
 
     },
-    callback: () => {},
-    releaseCallback: () => {},
+    callback: () => { },
+    releaseCallback: () => { },
 }
 
 TurningDial.propTypes = {
@@ -259,6 +278,7 @@ TurningDial.propTypes = {
     tickWidth: PropTypes.number,
     color: PropTypes.string,
     rotateOffset: PropTypes.number,
+    reverse: PropTypes.bool,
     style: PropTypes.object,
     callback: PropTypes.func,
     releaseCallback: PropTypes.func,

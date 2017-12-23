@@ -21,6 +21,7 @@ class TurningDialContainer extends Component {
                 color={'black'}
                 step={5}
                 tickWidth={2}
+                reverse={true}
                 callback={(value, rotate) => {
                     turnDial(value, rotate)
                 }}
