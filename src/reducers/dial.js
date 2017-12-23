@@ -2,6 +2,8 @@ import initialState from './initialState'
 import {
     TURN_DIAL,
     INPUT_CODE,
+    SET_CHECKPOINTS,
+    CLEAR_CHECKPOINT,
 } from '../actions/dial'
 
 function dial(state = initialState.dial, action) {
@@ -13,8 +15,26 @@ function dial(state = initialState.dial, action) {
                 rotate: action.rotate,
             }
         }
-        case INPUT_CODE: {   
-            
+        case SET_CHECKPOINTS:
+            return {
+                ...state,
+                checkpoints: {
+                    ...state.checkpoints,
+                    1: action[1],
+                    2: action[2],
+                    3: action[3],
+                }
+            }
+        case CLEAR_CHECKPOINT:
+            return {
+                ...state,
+                checkpoints: {
+                    ...state.checkpoints,
+                    toClear: action.checkpoint + 1 // Move to the next checkpoint
+                }
+            }
+        case INPUT_CODE: {
+
             /**
              * TODO:
              * Limit the focus number to 3 since there's only 3 combinations

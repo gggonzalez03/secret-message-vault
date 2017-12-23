@@ -14,6 +14,12 @@ var initialState = {
             focus: 1,
         },
         lastRotation: 0,
+        checkpoints: {
+            1: undefined,
+            2: undefined,
+            3: undefined,
+            toClear: 1, // The checkpoint to be cleared
+        }
     }
 }
 

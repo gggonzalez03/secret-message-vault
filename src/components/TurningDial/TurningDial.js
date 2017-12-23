@@ -162,7 +162,7 @@ class TurningDial extends Component {
             // This will correct the offset of the values when reversed
             if (reverse)
                 label -= step
-            
+
             return {
                 ...tick,
                 label: label
