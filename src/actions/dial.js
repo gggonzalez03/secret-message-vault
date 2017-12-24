@@ -53,11 +53,11 @@ export function validateCombination(combination, user, token, onSuccess) {
                             dispatch(setMessage(message.val()))
                             onSuccess()
                         })
-
-                    return {
-                        type: VALIDATE_COMBINATION,
-                        validation: 'invalid'
-                    }
+                    else
+                        dispatch({
+                            type: VALIDATE_COMBINATION,
+                            validation: 'invalid'
+                        })
                 })
             })
         })

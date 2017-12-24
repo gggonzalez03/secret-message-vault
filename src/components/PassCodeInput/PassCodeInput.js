@@ -9,7 +9,7 @@ class PassCodeInput extends Component {
         const { style } = this.props
 
         // props from redux
-        const { value, combination } = this.props
+        const { value, combination, validation } = this.props
 
         /**
          * TODO:
@@ -25,6 +25,9 @@ class PassCodeInput extends Component {
                 if (combination.focus != index + 1 && value != undefined)
                     status = 'inputSet'
             }
+
+            if (validation === 'invalid')
+                status = 'inputInvalid'
 
             return {
                 place: index + 1,
@@ -79,6 +82,10 @@ const styles = {
         ...inputStyleUnset,
         borderColor: '#fcd083'
     },
+    inputInvalid: {
+        ...inputStyleUnset,
+        borderColor: '#f2043c'
+    }
 }
 
 PassCodeInput.defaultProps = {
@@ -95,6 +102,7 @@ const mapStateToProps = ({ dial }) => {
     return {
         value: dial.value,
         combination: dial.combination,
+        validation: dial.validation,
     }
 }
 
