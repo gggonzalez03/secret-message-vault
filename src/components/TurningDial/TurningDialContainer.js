@@ -124,10 +124,6 @@ class TurningDialContainer extends Component {
     }
 }
 
-const styles = {
-
-}
-
 TurningDialContainer.defaulProps = {
     onValidate: () => { }
 }

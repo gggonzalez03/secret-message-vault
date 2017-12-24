@@ -3,11 +3,8 @@ import PropTypes from 'prop-types'
 import DirectionPointer from '../DirectionPointer/DirectionPointer'
 
 class TurningDial extends Component {
+    
     state = {}
-
-    constructor() {
-        super()
-    }
 
     componentWillMount() {
         this.setState({

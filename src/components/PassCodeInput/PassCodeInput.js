@@ -19,10 +19,10 @@ class PassCodeInput extends Component {
 
             var status = 'inputUnset'
 
-            if (combination.focus == index + 1)
+            if (combination.focus === index + 1)
                 status = 'inputActive'
             else {
-                if (combination.focus != index + 1 && value != undefined)
+                if (combination.focus !== index + 1 && value !== undefined)
                     status = 'inputSet'
             }
 
@@ -41,9 +41,9 @@ class PassCodeInput extends Component {
             <div style={{ ...styles.container, ...style }}>
                 {/* These statements say that if a code is undefined and it is the current focus, then the value selection should be shown
                     Else, show the code that is saved */}
-                <div style={combinationWithStatus[0].styles}>{combination[1] == undefined && combination.focus == 1 ? value : combination[1]}</div>&#8226;
-                <div style={combinationWithStatus[1].styles}>{combination[2] == undefined && combination.focus == 2 ? value : combination[2]}</div>&#8226;
-                <div style={combinationWithStatus[2].styles}>{combination[3] == undefined && combination.focus == 3 ? value : combination[3]}</div>
+                <div style={combinationWithStatus[0].styles}>{combination[1] === undefined && combination.focus === 1 ? value : combination[1]}</div>&#8226;
+                <div style={combinationWithStatus[1].styles}>{combination[2] === undefined && combination.focus === 2 ? value : combination[2]}</div>&#8226;
+                <div style={combinationWithStatus[2].styles}>{combination[3] === undefined && combination.focus === 3 ? value : combination[3]}</div>
             </div>
         )
     }

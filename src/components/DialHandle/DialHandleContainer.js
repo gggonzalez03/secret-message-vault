@@ -17,10 +17,6 @@ class DialHandleContainer extends Component {
     }
 }
 
-const styles = {
-
-}
-
 const mapStateToProps = ({ dial }) => {
     return {
         rotate: dial.rotate

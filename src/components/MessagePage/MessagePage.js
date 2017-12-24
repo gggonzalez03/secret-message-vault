@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 
 import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton'
@@ -26,7 +25,6 @@ class MessagePage extends Component {
                     <div style={styles.clear}>
                     </div>
                 </div>
-
             </div>
         )
     }
@@ -60,14 +58,6 @@ const styles = {
     clear: {
         flex: '1',
     }
-}
-
-MessagePage.defaultProps = {
-
-}
-
-MessagePage.propTypes = {
-
 }
 
 const mapStateToProps = ({ message }) => {
