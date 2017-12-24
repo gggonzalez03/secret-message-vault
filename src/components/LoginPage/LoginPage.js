@@ -5,6 +5,7 @@ import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
 import TurningDialContainer from '../TurningDial/TurningDialContainer';
 import DialHandleContainer from '../DialHandle/DialHandleContainer';
 import PassCodeInput from '../PassCodeInput/PassCodeInput';
+import AnonymousLogin from '../AnonymousLogin/AnonymousLogin';
 
 class LoginPage extends Component {
     state = {}
@@ -19,6 +20,7 @@ class LoginPage extends Component {
             <div style={styles.container}>
                 <div style={styles.header}>
                     <GoogleLoginButton style={styles.loginButton} />
+                    <AnonymousLogin style={styles.loginButton}/>
                 </div>
                 <div style={styles.passCodeInput}>
                     <PassCodeInput />

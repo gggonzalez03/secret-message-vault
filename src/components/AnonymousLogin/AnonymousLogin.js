@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import Icon from 'react-icons-kit'
-import { googlePlus } from 'react-icons-kit/fa/googlePlus'
+import { userSecret } from 'react-icons-kit/fa/userSecret'
 
-class GoogleLoginButton extends Component {
+class AnonymousLogin extends Component {
     state = {}
     render() {
         const { style } = this.props
         return (
-            <div style={{...styles.container, ...style}}><Icon size={32} icon={googlePlus}/></div>
+            <div style={{ ...styles.container, ...style }}><Icon size={32} icon={userSecret} /></div>
         )
     }
 }
@@ -28,4 +28,4 @@ const styles = {
     }
 }
 
-export default GoogleLoginButton
+export default AnonymousLogin
