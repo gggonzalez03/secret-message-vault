@@ -4,6 +4,7 @@ import {
     INPUT_CODE,
     SET_CHECKPOINTS,
     CLEAR_CHECKPOINT,
+    VALIDATE_COMBINATION,
 } from '../actions/dial'
 
 function dial(state = initialState.dial, action) {
@@ -50,6 +51,11 @@ function dial(state = initialState.dial, action) {
                 lastRotation: action.rotate,
             }
         }
+        case VALIDATE_COMBINATION:
+            return {
+                ...state,
+                validation: action.validation,
+            }
         default:
             return state
     }

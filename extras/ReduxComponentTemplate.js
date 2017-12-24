@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 
 class ReduxComponentTemplate extends Component {
@@ -13,6 +14,14 @@ class ReduxComponentTemplate extends Component {
 }
 
 const styles = {
+
+}
+
+ReduxComponentTemplate.defaultProps = {
+    
+}
+
+ReduxComponentTemplate.propTypes = {
 
 }
 

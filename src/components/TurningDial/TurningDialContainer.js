@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
+import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import TurningDial from './TurningDial'
 import {
     turnDial,
     inputCode,
     setCheckpoints,
     clearCheckpoint,
+    validateCombination,
 } from '../../actions/dial'
 
 // These containers are created so that the re-renders becomes minimal
@@ -42,10 +45,16 @@ class TurningDialContainer extends Component {
 
     render() {
         // redux action functions
-        const { turnDial, inputCode, setCheckpoints, clearCheckpoint } = this.props
+        const { turnDial, inputCode, setCheckpoints, clearCheckpoint, validateCombination } = this.props
 
         // redux props
         const { checkpoints, focus } = this.props
+
+        // default props
+        const { onValidate } = this.props
+
+        // Let this redux props editable
+        let { combination } = this.props
 
         /**
          * TODO:
@@ -72,6 +81,11 @@ class TurningDialContainer extends Component {
                     turnDial(value, rotate)
                 }}
                 releaseCallback={(value, rotate) => {
+                    /**
+                     * TODO:
+                     * 
+                     * Refactor this code
+                     */
                     if (focus === 2) {
                         // Only set the second number when all checkpoints are cleared
                         if (checkpoints.toClear > 3)
@@ -84,6 +98,17 @@ class TurningDialContainer extends Component {
                              * console.log("Turn 360 degrees then release at your second number.")
                              */
                         }
+                    }
+                    else if (focus === 3) {
+
+                        const { user, token } = this.props.match.params
+
+                        combination[focus] = value
+
+                        inputCode(value, rotate)
+
+                        // Combination should have a 1, 2, and 3 as name parameters
+                        validateCombination(combination, user, token, () => onValidate())
                     }
                     else {
                         let checkpoints = this.calculateCheckpoints(value, 8, 5)
@@ -103,10 +128,19 @@ const styles = {
 
 }
 
+TurningDialContainer.defaulProps = {
+    onValidate: () => { }
+}
+
+TurningDialContainer.propTypes = {
+    onValidate: PropTypes.func,
+}
+
 const mapStateToProps = ({ dial }) => {
     return {
         focus: dial.combination.focus,
         checkpoints: dial.checkpoints,
+        combination: dial.combination,
     }
 }
 
@@ -116,7 +150,8 @@ const mapDispatchToProps = dispatch => {
         inputCode: (value, rotate) => dispatch(inputCode(value, rotate)),
         setCheckpoints: (first, second, third) => dispatch(setCheckpoints(first, second, third)),
         clearCheckpoint: (toClear) => dispatch(clearCheckpoint(toClear)),
+        validateCombination: (combination, user, token, callback) => dispatch(validateCombination(combination, user, token, callback)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TurningDialContainer)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TurningDialContainer))

@@ -8,6 +8,12 @@ import PassCodeInput from '../PassCodeInput/PassCodeInput';
 
 class LoginPage extends Component {
     state = {}
+
+    // Redirect to the message page
+    toMessage() {
+        this.props.history.push('message')
+    }
+
     render() {
         return (
             <div style={styles.container}>
@@ -21,7 +27,9 @@ class LoginPage extends Component {
                     <div style={{ ...styles.handle, height: 350 * 2, width: 350 * 2 }}>
                         <DialHandleContainer />
                     </div>
-                    <TurningDialContainer />
+                    <TurningDialContainer
+                        onValidate={() => this.toMessage()}
+                    />
                 </div>
             </div>
         )

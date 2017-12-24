@@ -19,7 +19,11 @@ var initialState = {
             2: undefined,
             3: undefined,
             toClear: 1, // The checkpoint to be cleared
-        }
+        },
+        validation: undefined,
+    },
+    message: {
+        message: "",
     }
 }
 

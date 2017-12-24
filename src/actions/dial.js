@@ -1,7 +1,11 @@
+import * as fbapi from './firebase-api'
+import { setMessage } from './message'
+
 export const TURN_DIAL = 'TURN_DIAL'
 export const INPUT_CODE = 'INPUT_CODE'
 export const SET_CHECKPOINTS = 'SET_CHECKPOINTS'
 export const CLEAR_CHECKPOINT = 'CLEAR_CHECKPOINT'
+export const VALIDATE_COMBINATION = 'VALIDATE_COMBINATION'
 
 export function turnDial(value, rotate) {
     return {
@@ -32,5 +36,30 @@ export function inputCode(code, rotate) {
         type: INPUT_CODE,
         code: code,
         rotate: rotate,
+    }
+}
+
+export function validateCombination(combination, user, token, onSuccess) {
+
+    let post_id = "id1"
+    let passcode = `${combination[1]}-${combination[2]}-${combination[3]}`
+
+    return function (dispatch) {
+        fbapi.database.ref('messages/' + post_id).child('token').once('value').then(token1 => {
+            fbapi.database.ref('messages/' + post_id).child('user_id').once('value').then(user1 => {
+                fbapi.database.ref('messages/' + post_id).child('passcode').once('value').then(passcode1 => {
+                    if (token === token1.val() && user === user1.val() && passcode === passcode1.val())
+                        fbapi.database.ref('messages/' + post_id).child('message').once('value').then(message => {
+                            dispatch(setMessage(message.val()))
+                            onSuccess()
+                        })
+
+                    return {
+                        type: VALIDATE_COMBINATION,
+                        validation: 'invalid'
+                    }
+                })
+            })
+        })
     }
 }
