@@ -6,10 +6,6 @@ import DialHandleContainer from '../DialHandle/DialHandleContainer';
 import PassCodeInput from '../PassCodeInput/PassCodeInput';
 import Header from '../Header/Header';
 
-import {
-    googleSignInRedirect,
-} from '../../actions/auth';
-
 class LoginPage extends Component {
     state = {}
 
@@ -19,23 +15,6 @@ class LoginPage extends Component {
     }
 
     render() {
-
-        // OAuth actions
-        const { googleSignInRedirect } = this.props
-
-        // OAuth action results on success
-        const { redirectingFromGoogle } = this.props
-
-        /**
-         * TODO:
-         * Restrict googleSignInRedirect from getting called when refreshed
-         * This causes the user to appear to be logged out when not.
-         */
-
-        // The page load should be a redirect from google before this kicks off
-        // The redirectFromGoogle should immediately be changed to false to prevent infinite render here.
-        if (redirectingFromGoogle)
-            googleSignInRedirect()
         
         return (
             <div style={styles.container}>
@@ -86,13 +65,11 @@ const styles = {
 
 const mapStateToProps = ({ auth }) => {
     return {
-        redirectingFromGoogle: auth.redirectingFromGoogle,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        googleSignInRedirect: () => dispatch(googleSignInRedirect()),
     }
 }
 

@@ -26,7 +26,8 @@ export function googleSignInRedirect() {
             // The signed-in user info.
             var user = result.user;
 
-            if (user)
+            // Check the current redirect user values
+            if (user) {
                 user = {
                     uid: user.uid,
                     name: user.displayName,
@@ -34,14 +35,34 @@ export function googleSignInRedirect() {
                     photo: user.photoURL,
                     refreshToken: user.refreshToken,
                 }
-            else
-                user = null
-            
-            dispatch({
-                type: GOOGLE_SIGN_IN_REDIRECT,
-                user: user,
-                redirectingFromGoogle: false,
-            })
+
+                dispatch({
+                    type: GOOGLE_SIGN_IN_REDIRECT,
+                    user: user,
+                    redirectingFromGoogle: false,
+                })
+            }
+            else {
+                // Check maybe the user is still logged in from the last session
+                fbapi.fb.auth().onAuthStateChanged(user => {
+                    let loggedInUser = null
+
+                    if (user)
+                        loggedInUser = {
+                            uid: user.uid,
+                            name: user.displayName,
+                            email: user.email,
+                            photo: user.photoURL,
+                            refreshToken: user.refreshToken,
+                        }
+
+                    dispatch({
+                        type: GOOGLE_SIGN_IN_REDIRECT,
+                        user: loggedInUser,
+                        redirectingFromGoogle: false,
+                    })
+                })
+            }
         }).catch(function (error) {
             dispatch({
                 type: GOOGLE_SIGN_IN_REDIRECT,
@@ -53,7 +74,7 @@ export function googleSignInRedirect() {
 }
 
 export function googleSignOut() {
-    return function(dispatch) {
+    return function (dispatch) {
         fbapi.fb.auth().signOut().then(() => {
             dispatch({
                 type: GOOGLE_SIGN_OUT,

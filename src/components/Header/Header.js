@@ -8,6 +8,7 @@ import UserOptions from '../UserOptions/UserOptions';
 
 import {
     googleSignIn,
+    googleSignInRedirect,
     googleSignOut,
 } from '../../actions/auth';
 
@@ -16,10 +17,15 @@ class Header extends Component {
     render() {
 
         // OAuth actions
-        const { googleSignIn, googleSignOut } = this.props
+        const { googleSignIn, googleSignInRedirect, googleSignOut } = this.props
 
         // OAuth action results on success
-        const { user } = this.props
+        const { user, redirectingFromGoogle } = this.props
+
+        // The page load should be a redirect from google before this kicks off
+        // The redirectFromGoogle should immediately be changed to false to prevent infinite render here.
+        if (redirectingFromGoogle)
+            googleSignInRedirect()
 
         return (
             <div>
@@ -60,12 +66,14 @@ Header.propTypes = {
 const mapStateToProps = ({ auth }) => {
     return {
         user: auth.user,
+        redirectingFromGoogle: auth.redirectingFromGoogle,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         googleSignIn: () => dispatch(googleSignIn()),
+        googleSignInRedirect: () => dispatch(googleSignInRedirect()),
         googleSignOut: () => dispatch(googleSignOut()),
     }
 }
