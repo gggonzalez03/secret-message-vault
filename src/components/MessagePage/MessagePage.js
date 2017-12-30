@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton'
-import AnonymousLogin from '../AnonymousLogin/AnonymousLogin'
+import Header from '../Header/Header';
 
 class MessagePage extends Component {
     state = {}
@@ -12,10 +11,7 @@ class MessagePage extends Component {
 
         return (
             <div style={styles.container}>
-                <div style={styles.header}>
-                    <GoogleLoginButton style={styles.loginButton} />
-                    <AnonymousLogin style={styles.loginButton} />
-                </div>
+                <Header/>
                 <div style={styles.messageContainer}>
                     <div style={styles.clear}>
                     </div>

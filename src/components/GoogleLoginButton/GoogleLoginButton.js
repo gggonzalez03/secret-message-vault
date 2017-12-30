@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Icon from 'react-icons-kit'
+import { PropTypes } from 'prop-types'
 import { googlePlus } from 'react-icons-kit/fa/googlePlus'
 
 class GoogleLoginButton extends Component {
@@ -7,7 +8,12 @@ class GoogleLoginButton extends Component {
     render() {
         const { style } = this.props
         return (
-            <div style={{...styles.container, ...style}}><Icon size={32} icon={googlePlus}/></div>
+            <div
+                style={{ ...styles.container, ...style }}
+                onClick={() => this.props.callback()}
+            >
+                <Icon size={32} icon={googlePlus} />
+            </div>
         )
     }
 }
@@ -26,6 +32,14 @@ const styles = {
         marginTop: '1em',
         marginBottom: '1em',
     }
+}
+
+GoogleLoginButton.defaultProps = {
+    callback: () => { }
+}
+
+GoogleLoginButton.propTypes = {
+    callback: PropTypes.func,
 }
 
 export default GoogleLoginButton

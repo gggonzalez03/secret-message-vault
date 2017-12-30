@@ -24,6 +24,10 @@ var initialState = {
     },
     message: {
         message: "",
+    },
+    auth: {
+        user: null,
+        redirectingFromGoogle: true, // This is true because the user could still be authenticated
     }
 }
 
