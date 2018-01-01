@@ -3,7 +3,6 @@ import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 
 import GoogleLoginButton from '../GoogleLoginButton/GoogleLoginButton';
-import AnonymousLogin from '../AnonymousLogin/AnonymousLogin';
 import UserOptions from '../UserOptions/UserOptions';
 
 import {
@@ -34,7 +33,6 @@ class Header extends Component {
                         <GoogleLoginButton
                             callback={() => googleSignIn()}
                         />
-                        <AnonymousLogin />
                     </div>
                     : <div style={styles.header}>
                         <UserOptions
