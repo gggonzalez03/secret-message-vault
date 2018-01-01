@@ -16,6 +16,10 @@ export function googleSignIn() {
     }
 }
 
+/**
+ * TODO:
+ * This function needs refactoring
+ */
 export function googleSignInRedirect() {
     return function (dispatch) {
         fbapi.fb.auth().getRedirectResult().then(function (result) {

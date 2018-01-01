@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import './App.css';
 
-import LoginPage from './components/LoginPage/LoginPage'
+import MessageVault from './components/MessageVault/MessageVault'
 import MessagePage from './components/MessagePage/MessagePage'
 
 class App extends Component {
@@ -11,7 +11,7 @@ class App extends Component {
       <div className="App">
         <Switch>
           <Route path='/:user/:token/message/' component={MessagePage} />
-          <Route path='/:user/:token/' component={LoginPage} />
+          <Route path='/:user/:token/' component={MessageVault} />
         </Switch>
       </div>
     );

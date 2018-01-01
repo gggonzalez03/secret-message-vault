@@ -6,7 +6,7 @@ import DialHandleContainer from '../DialHandle/DialHandleContainer';
 import PassCodeInput from '../PassCodeInput/PassCodeInput';
 import Header from '../Header/Header';
 
-class LoginPage extends Component {
+class MessageVault extends Component {
     state = {}
 
     // Redirect to the message page
@@ -73,4 +73,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
+export default connect(mapStateToProps, mapDispatchToProps)(MessageVault)
