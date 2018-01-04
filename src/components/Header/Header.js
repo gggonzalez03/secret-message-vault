@@ -27,7 +27,7 @@ class Header extends Component {
             googleSignInRedirect()
 
         return (
-            <div>
+            <div style={this.props.style}>
                 {!user
                     ? <div style={styles.header}>
                         <GoogleLoginButton
@@ -54,11 +54,13 @@ const styles = {
 }
 
 Header.defaultProps = {
-    
+    style: {
+
+    }
 }
 
 Header.propTypes = {
-    
+    style: PropTypes.object,
 }
 
 const mapStateToProps = ({ auth }) => {
