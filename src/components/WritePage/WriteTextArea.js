@@ -19,7 +19,6 @@ class WriteTextArea extends Component {
                         />
                     </div>
                 </div>
-
                 <div style={styles.sendButtonContainer}>
                     <div style={styles.sendButton}>
                         Send
@@ -40,6 +39,7 @@ const styles = {
         flex: 1,
         padding: '2em',
         backgroundColor: '#fff',
+        borderRadius: '8px',
     },
     writeTextArea: {
         height: '100%',
