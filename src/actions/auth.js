@@ -16,16 +16,12 @@ export function googleSignIn() {
     }
 }
 
-/**
- * TODO:
- * This function needs refactoring
- */
 export function googleSignInRedirect() {
     return function (dispatch) {
         fbapi.fb.auth().getRedirectResult().then(function (result) {
-            
+
             var token = ""
-            
+
             if (result.credential) {
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 token = result.credential.accessToken;
@@ -40,41 +36,31 @@ export function googleSignInRedirect() {
                     name: user.displayName,
                     email: user.email,
                     photo: user.photoURL,
-                    refreshToken: user.refreshToken,
-                    token: token,
                 }
-
-                dispatch({
-                    type: GOOGLE_SIGN_IN_REDIRECT,
-                    user: user,
-                    redirectingFromGoogle: false,
-                })
             }
             else {
-                // Check maybe the user is still logged in from the last session
-                fbapi.fb.auth().onAuthStateChanged(user => {
-                    let loggedInUser = null
+                // Get the current user if logged in
+                user = fbapi.fb.auth().currentUser;
 
-                    if (user)
-                        loggedInUser = {
-                            uid: user.uid,
-                            name: user.displayName,
-                            email: user.email,
-                            photo: user.photoURL,
-                            refreshToken: user.refreshToken,
-                        }
-
-                    dispatch({
-                        type: GOOGLE_SIGN_IN_REDIRECT,
-                        user: loggedInUser,
-                        redirectingFromGoogle: false,
-                    })
-                })
+                if (user)
+                    user = {
+                        uid: user.uid,
+                        name: user.displayName,
+                        email: user.email,
+                        photo: user.photoURL,
+                    }
             }
+
+            dispatch({
+                type: GOOGLE_SIGN_IN_REDIRECT,
+                user: user || undefined, // Return undefined if user is either undefined or null
+                redirectingFromGoogle: false,
+            })
+
         }).catch(function (error) {
             dispatch({
                 type: GOOGLE_SIGN_IN_REDIRECT,
-                user: error,
+                user: undefined,
                 redirectingFromGoogle: false,
             })
         })
