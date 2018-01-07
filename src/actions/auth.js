@@ -23,9 +23,12 @@ export function googleSignIn() {
 export function googleSignInRedirect() {
     return function (dispatch) {
         fbapi.fb.auth().getRedirectResult().then(function (result) {
+            
+            var token = ""
+            
             if (result.credential) {
                 // This gives you a Google Access Token. You can use it to access the Google API.
-                var token = result.credential.accessToken;
+                token = result.credential.accessToken;
             }
             // The signed-in user info.
             var user = result.user;
@@ -38,6 +41,7 @@ export function googleSignInRedirect() {
                     email: user.email,
                     photo: user.photoURL,
                     refreshToken: user.refreshToken,
+                    token: token,
                 }
 
                 dispatch({

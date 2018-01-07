@@ -1,20 +1,55 @@
 import React, { Component } from 'react'
-import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
-import App from '../../App';
 
 class WriteRecipient extends Component {
-    state = {}
+    state = {
+        recipient: "",
+        passcode: {
+            1: 0,
+            2: 0,
+            3: 0,
+        },
+    }
+
+    recipientChange(recipient) {
+        this.setState({
+            recipient: recipient,
+        })
+    }
+
+    passcodeChange(index, number) {
+
+        // The number should be between 0 and 39
+        if (number < 40 && number >= 0)
+            this.setState(state => {
+                return {
+                    ...state,
+                    passcode: {
+                        ...state.passcode,
+                        [index]: number,
+                    },
+                }
+            })
+        /**
+         * TODO:
+         * Add property that indicates whether to show warning on the
+         * input box or not
+         */
+    }
+
     render() {
+
+        const { recipient, passcode } = this.state
+
         return (
             <div style={styles.container}>
                 <label style={styles.label}>Recipient</label>
-                <input type='text' style={styles.input} />
+                <input type='text' style={styles.input} value={recipient} onChange={event => this.recipientChange(event.target.value)} />
                 <label style={styles.label}>Passcode</label>
                 <div style={styles.passcodeContainer}>
-                    <input type='number' style={styles.passcodeInput} />-
-                    <input type='number' style={styles.passcodeInput} />-
-                    <input type='number' style={styles.passcodeInput} />
+                    <input type='number' style={styles.passcodeInput} value={passcode[1]} onChange={event => this.passcodeChange(1, event.target.value)} />-
+                    <input type='number' style={styles.passcodeInput} value={passcode[2]} onChange={event => this.passcodeChange(2, event.target.value)} />-
+                    <input type='number' style={styles.passcodeInput} value={passcode[3]} onChange={event => this.passcodeChange(3, event.target.value)} />
                 </div>
             </div>
         )
@@ -56,14 +91,6 @@ const styles = {
         borderRadius: '4px',
         border: '1px solid gray'
     }
-}
-
-WriteRecipient.defaultProps = {
-
-}
-
-WriteRecipient.propTypes = {
-
 }
 
 const mapStateToProps = ({ }) => {

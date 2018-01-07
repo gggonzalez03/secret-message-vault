@@ -8,8 +8,8 @@ class HomePage extends Component {
             <div style={styles.container}>
                 <Header />
                 <div style={styles.envelope}>
-                    <img src="https://png.icons8.com/color/96/lock-2.png" title="Lock" width="200" height="200" />
-                    <img src="https://png.icons8.com/color/96/secured-letter.png" title="Secured Letter" width="200" height="200" />
+                    <img src="https://png.icons8.com/color/96/lock-2.png" title="Lock" width="200" height="200" alt="lock icon"/>
+                    <img src="https://png.icons8.com/color/96/secured-letter.png" title="Secured Letter" width="200" height="200" alt="envelope icon"/>
                 </div>
             </div>
         )

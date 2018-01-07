@@ -3,11 +3,15 @@ import { Editor, EditorState } from 'draft-js'
 import 'draft-js/dist/Draft.css'
 
 class WriteTextArea extends Component {
-    constructor(props) {
-        super(props)
-        this.state = { editorState: EditorState.createEmpty() }
-        this.onChange = (editorState) => this.setState({ editorState })
+
+    state = {
+        editorState: EditorState.createEmpty(),
     }
+
+    onChange = (editorState) => {
+        this.setState({ editorState })
+    }
+
     render() {
         return (
             <div style={styles.container}>
