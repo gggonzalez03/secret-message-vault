@@ -1,4 +1,4 @@
-import * as fbapi from './firebase-api'
+import * as api from './firebase-api'
 
 export const SIGN_IN_GOOGLE = 'SIGN_IN_GOOGLE'
 export const GOOGLE_SIGN_IN_REDIRECT = 'GOOGLE_SIGN_IN_REDIRECT'
@@ -6,8 +6,8 @@ export const GOOGLE_SIGN_OUT = 'GOOGLE_SIGN_OUT'
 
 export function googleSignIn() {
     return function (dispatch) {
-        var provider = new fbapi.fb.auth.GoogleAuthProvider()
-        fbapi.fb.auth().signInWithRedirect(provider)
+        var provider = new api.firebase.auth.GoogleAuthProvider()
+        api.firebase.auth().signInWithRedirect(provider)
 
         dispatch({
             type: SIGN_IN_GOOGLE,
@@ -18,7 +18,7 @@ export function googleSignIn() {
 
 export function googleSignInRedirect() {
     return function (dispatch) {
-        fbapi.fb.auth().getRedirectResult().then(function (result) {
+        api.firebase.auth().getRedirectResult().then(function (result) {
 
             var token = ""
 
@@ -40,7 +40,7 @@ export function googleSignInRedirect() {
             }
             else {
                 // Get the current user if logged in
-                user = fbapi.fb.auth().currentUser;
+                user = api.firebase.auth().currentUser;
 
                 if (user)
                     user = {
@@ -69,7 +69,7 @@ export function googleSignInRedirect() {
 
 export function googleSignOut() {
     return function (dispatch) {
-        fbapi.fb.auth().signOut().then(() => {
+        api.firebase.auth().signOut().then(() => {
             dispatch({
                 type: GOOGLE_SIGN_OUT,
                 user: null,

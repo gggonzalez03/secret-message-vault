@@ -1,4 +1,4 @@
-import * as fbapi from './firebase-api'
+import * as api from './firebase-api'
 import { setMessage } from './message'
 
 export const TURN_DIAL = 'TURN_DIAL'
@@ -45,11 +45,11 @@ export function validateCombination(combination, user, token, onSuccess) {
     let passcode = `${combination[1]}-${combination[2]}-${combination[3]}`
 
     return function (dispatch) {
-        fbapi.database.ref('messages/' + post_id).child('token').once('value').then(token1 => {
-            fbapi.database.ref('messages/' + post_id).child('user_id').once('value').then(user1 => {
-                fbapi.database.ref('messages/' + post_id).child('passcode').once('value').then(passcode1 => {
+        api.database.ref('messages/' + post_id).child('token').once('value').then(token1 => {
+            api.database.ref('messages/' + post_id).child('user_id').once('value').then(user1 => {
+                api.database.ref('messages/' + post_id).child('passcode').once('value').then(passcode1 => {
                     if (token === token1.val() && user === user1.val() && passcode === passcode1.val())
-                        fbapi.database.ref('messages/' + post_id).child('message').once('value').then(message => {
+                        api.database.ref('messages/' + post_id).child('message').once('value').then(message => {
                             dispatch(setMessage(message.val()))
                             onSuccess()
                         })
