@@ -1,0 +1,45 @@
+{
+  "rules": {
+    "inboxes": {
+      "$uid": {
+        ".read": "auth !== null && auth.uid === $uid",
+        "$message_id": {
+          ".write": "auth !== null && root.child('contacts/' + $uid).hasChildren([auth.uid]) === true && !data.exists() === true"
+        }
+      }
+    },
+    "sentboxes": {
+      "$uid": {
+        ".read": "auth !== null && auth.uid === $uid",
+        "$message_id": {
+          ".write": "auth !== null && auth.uid === $uid && !data.exists() === true"
+        }
+      }
+    },
+    "contacts": {
+      "$uid": {
+        ".read": "auth !== null && auth.uid === $uid",
+        "$contact_id": {
+          ".write": "auth !== null && auth.uid === $uid && !data.exists() === true"
+        },
+        "contact_requests_in": {
+          "$uid": {
+            ".write": "auth !== null && !data.exists() === true"
+          }
+        },
+        "contact_requests_out": {
+          "$uid": {
+            ".write": "auth !== null && auth.uid === $uid"
+          }
+        }
+      }
+    },
+    "users": {
+      "$uid": {
+        "profile": {
+          ".read": "auth !== null"
+        }
+      }
+    }
+  }
+}
