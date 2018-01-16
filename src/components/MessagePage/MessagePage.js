@@ -58,7 +58,8 @@ const styles = {
 
 const mapStateToProps = ({ message }) => {
     return {
-        message: message.message,
+        message: message.message.message,
+        title: message.message.title,
     }
 }
 

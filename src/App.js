@@ -13,8 +13,8 @@ class App extends Component {
       <div className="App">
         <Switch>
           <Route path='/write' component={WritePage} />
-          <Route path='/:user/:token/message/' component={MessagePage} />
-          <Route path='/:user/:token/' component={MessageVault} />
+          <Route path='/:message_id/:token/message/' component={MessagePage} />
+          <Route path='/:message_id/:token/' component={MessageVault} />
           <Route path='/' component={HomePage} />
         </Switch>
       </div>

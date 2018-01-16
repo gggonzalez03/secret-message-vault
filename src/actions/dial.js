@@ -39,27 +39,31 @@ export function inputCode(code, rotate) {
     }
 }
 
-export function validateCombination(combination, user, token, onSuccess) {
+export function validateCombination(user_id, message_id, combination, token, onSuccess) {
 
-    let post_id = "id1"
     let passcode = `${combination[1]}-${combination[2]}-${combination[3]}`
 
     return function (dispatch) {
-        api.database.ref('messages/' + post_id).child('token').once('value').then(token1 => {
-            api.database.ref('messages/' + post_id).child('user_id').once('value').then(user1 => {
-                api.database.ref('messages/' + post_id).child('passcode').once('value').then(passcode1 => {
-                    if (token === token1.val() && user === user1.val() && passcode === passcode1.val())
-                        api.database.ref('messages/' + post_id).child('message').once('value').then(message => {
-                            dispatch(setMessage(message.val()))
-                            onSuccess()
-                        })
-                    else
-                        dispatch({
-                            type: VALIDATE_COMBINATION,
-                            validation: 'invalid'
-                        })
+        api.database.ref('inboxes/' + user_id + '/' + message_id).once('value').then(result => {
+
+            // This message result includes all the info including the message, the passcode, and the token
+            // This is not the ideal setup since it's supposed to protect these values. This is a temporary solution.
+            var message = result.val()
+
+            if (passcode === message.passcode && token === message.token) {
+
+                // The dispatch value is limited to message and title values
+                dispatch(setMessage({
+                    message: message.message,
+                    title: message.title,
+                }))
+                onSuccess()
+            }
+            else
+                dispatch({
+                    type: VALIDATE_COMBINATION,
+                    validation: 'invalid'
                 })
-            })
         })
     }
 }

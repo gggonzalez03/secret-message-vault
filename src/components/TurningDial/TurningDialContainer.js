@@ -101,14 +101,15 @@ class TurningDialContainer extends Component {
                     }
                     else if (focus === 3) {
 
-                        const { user, token } = this.props.match.params
+                        const { message_id, token } = this.props.match.params
+                        const { user } = this.props
 
                         combination[focus] = value
 
                         inputCode(value, rotate)
 
                         // Combination should have a 1, 2, and 3 as name parameters
-                        validateCombination(combination, user, token, () => onValidate())
+                        validateCombination(user.uid, message_id, combination, token, () => onValidate())
                     }
                     else {
                         let checkpoints = this.calculateCheckpoints(value, 8, 5)
@@ -132,11 +133,12 @@ TurningDialContainer.propTypes = {
     onValidate: PropTypes.func,
 }
 
-const mapStateToProps = ({ dial }) => {
+const mapStateToProps = ({ dial, auth }) => {
     return {
         focus: dial.combination.focus,
         checkpoints: dial.checkpoints,
         combination: dial.combination,
+        user: auth.user,
     }
 }
 
@@ -146,7 +148,7 @@ const mapDispatchToProps = dispatch => {
         inputCode: (value, rotate) => dispatch(inputCode(value, rotate)),
         setCheckpoints: (first, second, third) => dispatch(setCheckpoints(first, second, third)),
         clearCheckpoint: (toClear) => dispatch(clearCheckpoint(toClear)),
-        validateCombination: (combination, user, token, callback) => dispatch(validateCombination(combination, user, token, callback)),
+        validateCombination: (user, message_id, combination, token, callback) => dispatch(validateCombination(user, message_id, combination, token, callback)),
     }
 }
 
